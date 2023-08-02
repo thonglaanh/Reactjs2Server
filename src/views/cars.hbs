@@ -1,0 +1,64 @@
+{{>header}}
+<div class="d-flex" style="justify-content: space-between; margin: 10px 200px;">
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Lọc status
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/car">
+                    -- Tất cả --
+                </a></li>
+            {{#each brands}}
+            <li><a class="dropdown-item" href="/car?brand={{this.name}}">
+                    {{this.name}}
+                </a></li>
+            {{/each}}
+        </ul>
+    </div>
+    <button type="button" class="btn btn-info ms-3" onclick="window.location.href='/car/addNew'">Thêm mới sản
+        phẩm</button>
+</div>
+
+
+<table class="table table-striped table-bordered" style="width: 1300px;margin: auto;">
+    <thead>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Name</th>
+            <th scope="col">Brand</th>
+            <th scope="col">Price</th>
+            <th scope="col">Evaluate</th>
+            <th scope="col">Date</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Available color</th>
+            <th scope="col">Select color</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {{#each car}}
+        <tr>
+
+            <td><img src="{{this.image}}" style="width: 60px; height: 60px;object-fit: cover; "></td>
+            <td>{{this.name}}</td>
+            <td>{{this.brands.name}}</td>
+            <td>{{this.price}}</td>
+            <td>{{this.describe}}</td>
+            <td>{{this.date}}</td>
+            <td>{{this.quantity}}</td>
+            <td>{{this.availableColors}}</td>
+            <td>{{this.selectColor}}</td>
+            <td><a href="/car/screenUpdate/{{this._id}}" style="text-decoration: none;color: blue;">Sửa</a></td>
+            <td>
+                <form action="/car/delete/{{this._id}}" method=""
+                    onsubmit="return confirm('Bạn có muốn xóa {{this.name}} này?')">
+                    <button type="submit" class="btn btn-link" style="text-decoration: none;color: brown;">Xóa</button>
+                </form>
+            </td>
+
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

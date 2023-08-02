@@ -1,0 +1,75 @@
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    form {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px #ccc;
+        text-align: center;
+    }
+
+    select {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 200px;
+        box-shadow: 0px 0px 10px #ccc;
+    }
+
+    .form-control {
+        margin-bottom: 10px;
+        width: 300px;
+    }
+
+    .form-logo {
+        width: 100px;
+        height: 60px;
+        margin-bottom: 20px;
+    }
+
+    .form-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+</style>
+<form method="POST" action="{{_id}}" style="background-color: antiquewhite;" enctype="multipart/form-data">
+    <div class="form-title">Update xe</div>
+
+    <div class="mb-3">
+        <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên sản phẩm" value="{{name}}">
+    </div>
+
+    <div class="mb-3 ">
+        <select name="brands">
+            <option>-- Hãng xe --</option>
+            {{#each myBrand}}
+            <option value={{this._id}}>{{this.name}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="mb-3">
+        <input type="text" class="form-control" name="price" placeholder="Nhập giá sản phẩm" value="{{price}}">
+    </div>
+
+    <div class="mb-3">
+        <input type="text" class="form-control" name="describe" placeholder="Miêu tả" value="{{describe}}">
+    </div>
+    <label for="avatar">Ảnh sản phẩm</label>
+    <div class="mb-3">
+        <input type="file" id="image" name="image" multiple>
+    </div>
+    <div class="mb-3">
+        <input type="date" class="form-control" name="date" placeholder="Năm sản xuất" value="{{date}}">
+    </div>
+    <div class="mb-3">
+        <input type="text" class="form-control" name="quantity" placeholder="Số lượng" value="{{quantity}}">
+    </div>
+
+    <button type="submit" class="btn btn-success">Change</button>
+</form>

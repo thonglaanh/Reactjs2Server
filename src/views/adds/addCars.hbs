@@ -1,0 +1,103 @@
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    form {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px #ccc;
+        text-align: center;
+    }
+
+    select {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 200px;
+        box-shadow: 0px 0px 10px #ccc;
+    }
+
+    .form-control {
+        margin-bottom: 10px;
+        width: 300px;
+    }
+
+    .form-logo {
+        width: 100px;
+        height: 60px;
+        margin-bottom: 20px;
+    }
+
+    .form-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+</style>
+
+<form method="POST" onsubmit="return validateForm()" action="/car/add" style="background-color: antiquewhite;"
+    enctype="multipart/form-data">
+    <div class="form-title">Thêm mới xe</div>
+
+    <div class="mb-3">
+        <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên sản phẩm">
+    </div>
+
+    <div class="mb-3 ">
+        <select name="brands">
+            <option>-- Hãng xe --</option>
+            {{#each brands}}
+            <option value={{this._id}}>{{this.name}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="mb-3">
+        <input type="text" class="form-control" id="price" name="price" placeholder="Nhập giá sản phẩm">
+    </div>
+
+    <div class="mb-3">
+        <input type="text" class="form-control" id="describe" name="describe" placeholder="Miêu tả">
+    </div>
+    <label for="avatar">Ảnh sản phẩm</label>
+    <div class="mb-3">
+        <input type="file" id="image" name="image" multiple>
+    </div>
+    <div class="mb-3">
+        <input type="date" class="form-control" id="date" name="date" placeholder="Năm sản xuất">
+    </div>
+    <div class="mb-3">
+        <input type="text" class="form-control" id="quantity" name="quantity" placeholder="Số lượng">
+    </div>
+
+    <button type="submit" class="btn btn-success">Thêm mới sản phẩm</button>
+</form>
+<script>
+    function validateForm() {
+        const name = document.getElementById("name").value;
+        const price = document.getElementById("price").value;
+        const date = document.getElementById("date").value;
+        const quantity = document.getElementById("quantity").value;
+        const image = document.getElementById("image").value;
+
+        if (!name || !price || !date || !quantity || !image) {
+            alert("Vui lòng điền đầy đủ thông tin.");
+            return false;
+        }
+
+        if (isNaN(price) || isNaN(quantity)) {
+            alert("Giá và số lượng phải là số.");
+            return false;
+        }
+
+        if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(date)) {
+            alert("Định dạng ngày không hợp lệ.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
