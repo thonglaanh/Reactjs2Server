@@ -11,6 +11,6 @@ router.get('/addNew', accountController.addNew);
 router.get('/delete/:_id', accountController.delete);
 router.post('/add', upload.single('image'), accountController.add)
 router.post('/login', accountController.login);
+router.post('/register', accountController.register);
 router.get('/', accountController.account);
-
 module.exports = router;

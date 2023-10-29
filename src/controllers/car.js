@@ -5,12 +5,15 @@
 const Cars = require('../models/cars');
 const Brands = require('../models/brands');
 const fs = require('fs');
+const PAGE_SIZE = 18;
 class productController {
     carClient(req, res) {
         let brandsData;
         let brandQuery = req.query.brand;
         let selectedBrand;
-
+        let page = req.query.page;
+        let carData;
+        page < 1 ? page = 1 : page = page;
         Brands.find({})
             .then((brands) => {
                 brandsData = brands.map((br) => br.toObject());
@@ -29,9 +32,15 @@ class productController {
                 }
             })
             .then((cars) => {
-                const carData = cars.map((car) => car.toObject());
-                res.json({ car: carData, brands: brandsData })
-                // res.render('cars', { car: carData, brands: brandsData });
+                const TotalPage = Math.ceil(cars.length / PAGE_SIZE);
+                console.log(TotalPage);
+                page > TotalPage ? page = TotalPage : page = page;
+                page == undefined ? page = 1 : page = page;
+                const skip = (page - 1) * PAGE_SIZE;
+                carData = cars.slice(skip, skip + PAGE_SIZE).map((car) => car.toObject());
+                console.log(carData);
+                console.log(generatePageLinks(TotalPage));
+                res.json({ car: carData, brands: brandsData, currentPage: page, totalPages: TotalPage, pageLinks: generatePageLinks(TotalPage) });
             })
             .catch((error) => {
                 console.error(error);
@@ -42,7 +51,9 @@ class productController {
         let brandsData;
         let brandQuery = req.query.brand;
         let selectedBrand;
-
+        let page = req.query.page;
+        let carData;
+        page < 1 ? page = 1 : page = page;
         Brands.find({})
             .then((brands) => {
                 brandsData = brands.map((br) => br.toObject());
@@ -61,12 +72,18 @@ class productController {
                 }
             })
             .then((cars) => {
-                const carData = cars.map((car) => car.toObject());
-                res.render('cars', { car: carData, brands: brandsData });
+                const TotalPage = Math.ceil(cars.length / PAGE_SIZE);
+                console.log(TotalPage);
+                page > TotalPage ? page = TotalPage : page = page;
+                page == undefined ? page = 1 : page = page;
+                const skip = (page - 1) * PAGE_SIZE;
+                carData = cars.slice(skip, skip + PAGE_SIZE).map((car) => car.toObject());
+                console.log(carData);
+                console.log(generatePageLinks(TotalPage));
+                res.render('cars', { car: carData, brands: brandsData, currentPage: page, totalPages: TotalPage, pageLinks: generatePageLinks(TotalPage) });
             })
             .catch((error) => {
                 console.error(error);
-                res.render('error', { error });
             });
     }
     detail(req, res) {
@@ -151,5 +168,12 @@ class productController {
             })
             .catch(next);
     }
+}
+function generatePageLinks(totalPages) {
+    const pageLinks = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pageLinks.push(i);
+    }
+    return pageLinks;
 }
 module.exports = new productController;

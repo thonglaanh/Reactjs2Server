@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -7,6 +8,8 @@ const cors = require('cors');
 const db = require('./db');
 app.use(cors());
 db.connect();
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 
 app.use('/uploads', express.static('uploads'))
 

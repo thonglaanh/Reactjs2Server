@@ -13,7 +13,6 @@ router.get('/delete/:_id', carController.delete);
 router.post('/add', upload.single('image'), carController.add)
 router.get('/client', carController.carClient);
 router.get('/:_id', carController.detail);
-
 router.get('/', carController.car);
 
 

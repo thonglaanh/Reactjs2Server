@@ -62,3 +62,34 @@
         {{/each}}
     </tbody>
 </table>
+<nav aria-label="Page navigation example" style="margin-left: 700px;margin-top: 50px;">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous" onclick="previousPage()">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {{#each pageLinks}}
+        <li class="page-item"><a class="page-link" href="car?page={{this}}">{{this}}</a></li>
+        {{/each}}
+
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next" onclick="nextPage()">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<script>
+    function nextPage() {
+        var currentPage = parseInt('{{currentPage}}');
+        var totalPages = parseInt('{{totalPages}}');
+        var nextPage = currentPage < totalPages ? currentPage + 1 : totalPages;
+        window.location.href = "car?page=" + nextPage;
+    }
+    function previousPage() {
+        var currentPage = parseInt('{{currentPage}}');
+        var previousPage = currentPage > 1 ? currentPage - 1 : 1;
+        window.location.href = "car?page=" + previousPage;
+    }
+</script>
